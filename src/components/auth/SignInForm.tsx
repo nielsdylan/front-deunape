@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent  } from "react";
 import { Link, useNavigate } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
@@ -8,6 +8,8 @@ import Button from "../ui/button/Button";
 import axios from 'axios';
 
 export default function SignInForm() {
+  const API_URL = import.meta.env.VITE_APP_API_URL;
+  
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -27,15 +29,16 @@ export default function SignInForm() {
     }));
   };
 
-  const handleSubmit = async  (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async  (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Valores del formulario:', formValues);
-
     setLoading(true);
+    console.log(API_URL);
+    
     try {
       // Reemplaza la URL con la de tu API
-      const response = await axios.post('http://127.0.0.1:8000/api/login', formValues);
-      console.log('Respuesta:', response.data);
+      const response = await axios.post(API_URL+'/login', formValues);
+      localStorage.setItem('userToken', JSON.stringify(response.data));
+      localStorage.setItem('token', response.data.access_token);
       
     } catch (err) {
       console.error(err);

@@ -4,19 +4,32 @@ import AppLayout from "../layout/AppLayout";
 import Home from "../pages/Dashboard/Home";
 import SignIn from "../pages/AuthPages/SignIn";
 import NotFound from "../pages/OtherPage/NotFound";
-
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import ConfigRoutes from "./ConfigRoute";
+// import { isAuthenticated } from "./Auth"; 
 function Index() {
-    return ( 
+    return (
         <>
         <Router>
             <ScrollToTop />
             <Routes>
-                {/* Auth Layout */}
-                <Route path="/" element={<SignIn />} />
+                
+                {/* Ruta pública para la autenticación, con redirección */}
+                <Route path="/" element={<PublicRoute><SignIn /></PublicRoute>} />
+                {/* <Route element={<PublicRoute  />} >
+                    <Route path="/" element={<SignIn />} />
+                </Route> */}
                 {/* Dashboard Layout */}
-                <Route element={<AppLayout />}>
-                    <Route index path="/dashboard" element={<Home />} />
+                <Route element={<PrivateRoute  />} >
+                    <Route path="/" element={<AppLayout />}>
+                        <Route index path="/dashboard" element={<Home />} />
+                        
+                    </Route>
+                    {/* Anidamos las rutas de configuración bajo el prefijo "/config" */}
+                    <Route path="/configuraciones/*" element={<ConfigRoutes />} />
                 </Route>
+
     
                 
     

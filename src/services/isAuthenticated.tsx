@@ -26,7 +26,6 @@ export const isAuthenticated = async () : Promise<boolean>  => {
             Authorization: `Bearer ${token}` // Send the token in the Authorization header
         }
     });
-    console.log(response.data);
     // If the request is successful (status 200), the token is valid
     if (response.data.session === true) {
         

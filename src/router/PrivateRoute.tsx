@@ -14,7 +14,6 @@ function PrivateRoute() {
     useEffect(() => {
         const checkAuth = async () => {
             const status = await isAuthenticated();
-            console.log(status);
             setAuthStatus(status);
             setLoading(false);
         };
@@ -27,7 +26,6 @@ function PrivateRoute() {
         // Muestra una pantalla de carga mientras se verifica la autenticación
         return <div>Cargando...</div>; 
     }
-    console.log(authStatus);
     
     return authStatus? <Outlet />: <Navigate to="/" />;
 }
